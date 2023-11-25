@@ -6,6 +6,9 @@ public class DungCuHocTap extends SanPham {
     private String chucNang;
     private String maDungCu;
     private String loai;
+    private String tenSP;
+    private int soluongtonkho;
+    private int dongia;
     Scanner sc= new Scanner (System.in);
     public DungCuHocTap(String NSX, String tenSP, double giaBan, double giaNhap, int soLuong, String chucNang,
             String maDungCu) {
@@ -13,9 +16,9 @@ public class DungCuHocTap extends SanPham {
         this.chucNang = chucNang;
         this.maDungCu = maDungCu;
     }
-    public DungCuHocTap(String maDungCu, String tensp, int soluongtonkho, int dongia, String loai) {
+    public DungCuHocTap(String maDungCu, String tenSP, int soluongtonkho, int dongia, String loai) {
         this.maDungCu = maDungCu;
-        this.tensp = tensp;
+        this.tenSP=tenSP;
         this.soluongtonkho = soluongtonkho;
         this.dongia = dongia;
         this.loai=loai;
@@ -28,7 +31,17 @@ public class DungCuHocTap extends SanPham {
     DungCuHocTap(SanPham sp, String string, int parseInt, String par1) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+    public void setSoLuongTonKho(int soluongtonkho) {
+        this.soluongtonkho = soluongtonkho;
+    }
 
+    public void setDonGia(int dongia) {
+        this.dongia = dongia;
+    }
+
+    public void setLoai(String loai) {
+        this.loai = loai;
+    }
 
     public String getChucNang() {
         return chucNang;

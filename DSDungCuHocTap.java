@@ -123,49 +123,44 @@ public static void readFromFile(){
     }
     public void sua() {
         Scanner sc = new Scanner(System.in);
-        String ma;
-        int pos = -1;
-        int pos1 = -1;
         System.out.println("Nhap ma dung cu can sua thong tin:");
-        ma = sc.nextLine();
-        do{
-            for(int i = 0 ; i < dungCu.length;i++){
-                if(dungCu[i].getMaDungCu().equalsIgnoreCase(ma))
-                {
-                    pos = i;
-                    pos1 = -1;
-                }
-            }
-               if ( pos == -1)
-            {
-                System.out.println("Ma dung cu khong ton tai");
-                System.out.println("Nhap lai ma dung cu");
-                ma = sc.nextLine();
-                pos1 = 1;
-            }
-        }while(pos1 != -1);
-                System.out.println("Ma dung cu");
-                String madc = sc.nextLine();
-                System.out.println("Ten dung cu ");
-                String tendc = sc.nextLine();
-                System.out.println("So Luong Ton Kho");
-                int soluongtonkho = Integer.parseInt(sc.nextLine());
-                System.out.println("Don Gia");
-                int dongia = Integer.parseInt(sc.nextLine());
-                System.out.println("Loai");
-                String loai = sc.nextLine();
-            for ( int i = 0 ; i< dungCu.length;i++)
-            {
-                if(dungCu[i].getMaDungCu().equalsIgnoreCase(ma))
-                {
-                    
-                    dungCu[i] = new DungCuHocTap(madc,tendc,soluongtonkho,dongia,loai);
-        
-                }
-            }
-            System.out.println("Sua thanh cong");
-        
+        String ma = sc.nextLine();
+        int pos = -1;
+        for (int i = 0; i < dungCu.length; i++) {
+            if (dungCu[i].getMaDungCu().equalsIgnoreCase(ma)) {
+              pos = i;
+              break; 
+        }
     }
+    while (pos == -1) {
+        System.out.println("Ma dung cu khong ton tai");
+        System.out.println("Nhap lai ma dung cu:");
+        ma = sc.nextLine();
+        for (int i = 0; i < dungCu.length; i++) {
+            if (dungCu[i].getMaDungCu().equalsIgnoreCase(ma)) {
+                pos = i;
+                break;
+            }
+        }
+    }
+    System.out.println("Ma dung cu");
+    String madc = sc.nextLine();
+    System.out.println("Ten dung cu ");
+    String tendc = sc.nextLine();
+    System.out.println("So Luong Ton Kho");
+    int soluongtonkho = Integer.parseInt(sc.nextLine());
+    System.out.println("Don Gia");
+    int dongia = Integer.parseInt(sc.nextLine());
+    System.out.println("Loai");
+    String loai = sc.nextLine();
+    dungCu[pos].setMaDungCu(madc);
+    dungCu[pos].setTenSP(tendc);
+    dungCu[pos].setSoLuongTonKho(soluongtonkho);
+    dungCu[pos].setDonGia(dongia);
+    dungCu[pos].setLoai(loai);
+
+    System.out.println("Sua thanh cong");
+}
    
     public void xoa() {
         Scanner sc = new Scanner(System.in);
