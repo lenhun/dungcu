@@ -18,11 +18,18 @@ public class Thuoc extends DungCuHocTap{
     this.kichCo=kichCo;
     this.loaiThuoc=loaiThuoc;
  }
-     public Thuoc(DungCuHocTap dcht,String kichCo,String loaiThuoc){
-    super(dcht.getSanPham(),dcht.getMaDungCu(),dcht.getNSX(),dcht.getGiaBan(),dcht.getTenSP());
-    this.kichCo=kichCo;
-    this.loaiThuoc=loaiThuoc;
-} 
+ public Thuoc(String maDungCu, String tenSP, String NSX, double giaBan, double giaNhap, int soLuong, String chucNang, String kichCo, String loaiThuoc) {
+    super(NSX, tenSP, giaBan, giaNhap, soLuong, chucNang, maDungCu);
+    this.kichCo = kichCo;
+    this.loaiThuoc = loaiThuoc;
+}
+public Thuoc(DungCuHocTap dcht, String kichCo, String loaiThuoc) {
+    super(dcht.getMaDungCu(), dcht.getTenSP(), dcht.getNSX(), dcht.getGiaBan(), dcht.getGiaNhap(), dcht.getSoLuong(), dcht.getChucNang());
+    this.kichCo = kichCo;
+    this.loaiThuoc = loaiThuoc;
+}
+   
+
     public String getLoaiThuoc(){
         return this.loaiThuoc;
     }

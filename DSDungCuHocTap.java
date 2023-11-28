@@ -5,250 +5,223 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Scanner;
 
 import SPham.DungCuHocTap;
+import SPham.Gom;
+import SPham.Viet;
+import SPham.Thuoc;
 
-public class DSDungCuHocTap{
-    private static DungCuHocTap[] dungCu = new DungCuHocTap [0];
-    private static int soLuong = 0;
-    static Scanner sc = new Scanner(System.in);
-    
-    public static DungCuHocTap[] getDSDungCuHocTap() {
-        return dungCu;
+public class DSDungCuHocTap implements CHUCNANG,DOCGHIFILE{
+    private static final int MAX_DUNGCU = 100;
+    private DungCuHocTap[] danhSachDungCu;
+    private int soLuongDungCu;
+    private Scanner sc = new Scanner(System.in);
+
+    public DS_DungCuHocTap() {
+        danhSachDungCu = new DungCuHocTap[MAX_DUNGCU];
+        soLuongDungCu = 0;
     }
-    public static int getSoLuong() {
-        return soLuong;
+    public DSDungCuHocTap() {
     }
-    
-public static void readFromFile(){
-   try {
-    FileReader fr = new FileReader("dsdcht.txt");
-    BufferedReader br = new BufferedReader(fr);
 
-    String line = "";
-    while ((line = br.readLine()) != null) {
-        String txt[] = line.split(",");
-        SanPham sp = new SanPham(txt[0], txt[1], Double.parseDouble(txt[2]), Double.parseDouble(txt[3]),Integer.parseInt(text[4]));
-        DungCuHocTap dcht = new DungCuHocTap(sp, txt[5], Integer.parseInt(txt[6]),txt[7]);
-
-        if (txt[7].equals("thuoc")) {
-            Thuoc thuoc = new Thuoc(dcht, txt[8], txt[9]);
-            dungCu[soLuong] = thuoc;
-        } else if(txt[7].equals("gom")){
-            Gom gom = new Gom(dcht, txt[8],txt[9]);
-            dungCu[soLuong] = gom;  
+    @Override
+    public void Them() {
+        if (soLuongDungCu == danhSachDungCu.length) {
+            danhSachDungCu = java.util.Arrays.copyOf(danhSachDungCu, danhSachDungCu.length * 2);
         }
-        else{
-            Viet viet = new Viet(dcht, txt[8], txt[9]);
-            dungCu[soLuong] = viet;
-        }
-        soLuong++;
-    }
-    br.close();
-    fr.close();
 
-} catch (IOException e) {
-    e.printStackTrace();
-		}
-    }
-   
-    public void ghiFile(){
-        try {
-            FileWriter fw= new FileWriter("dsdc.txt");
-            BufferedWriter bw = new BufferedWriter(fw);
-            for(int i=0; i<soLuong; i++){
-                String line= dungCu[i].getTenSP()+","+dungCu[i].getNSX()+","+
-                             dungCu[i].getGiaBan()+","+
-                             dungCu[i].getGiaNhap()+","+
-                             dungCu[i].getMaDungCu()+","+dungCu[i].getChucNang();
-                bw.write(line);
-                bw.newLine();
+        if (soLuongDungCu < MAX_DUNGCU) {
+            System.out.println("Chon loai dung cu:");
+            System.out.println("1. Thuoc");
+            System.out.println("2. Viet");
+            System.out.println("3. Gom");
+
+            int choice = sc.nextInt();
+            DungCuHocTap dungCuMoi = null;
+
+            switch (choice) {
+                case 1:
+                    dungCuMoi = new Thuoc();
+                    break;
+                case 2:
+                    dungCuMoi = new Viet();
+                    break;
+                case 3:
+                    dungCuMoi = new Gom();
+                    break;
+                default:
+                    System.out.println("Lua chon khong hop le.");
+                    return;
             }
-            System.out.println("Xuất file thành công!");
-            bw.close();
-            fw.close();
-        } catch (IOException e) {
+            dungCuMoi.input();
+            danhSachDungCu[soLuongDungCu++] = dungCuMoi;
+            System.out.println("Them dung cu thanh cong.");
+        } else {
+            System.out.println("Danh sach dung cu da day. Khong the them moi.");
         }
-        
     }
-    public void Them(){
-        Scanner sc = new Scanner(System.in);
-        System.out.println("ma dung cu");
+
+    @Override
+    public void Sua() {
+        System.out.println("Nhap ma dung cu can sua: ");
         String maDungCu = sc.nextLine();
-        int pos = -1;
-        do {
-            int pos1 = 1;
-            for(int i = 0 ; i < dungCu.length ; i++){
-                pos1 = 1;
-                    if(dungCu[i].getMaDungCu().equalsIgnoreCase(maDungCu))
-                    {
-                        System.out.println("Ma dung cu bi trung ! ");
-                        System.out.println("Nhap lai ma dung cu : ");
-                        maDungCu = sc.nextLine();
-                        break;
-                    }
-                    pos1 = maDungCu.indexOf("DC");
-                    if(pos1 != 0)
-                    {
-                        System.out.println("Bat buoc hai ki tu dau tien la : 'DC' ");
-                        System.out.println("Nhap lai ma dung cu");
-                        maDungCu = sc.nextLine();
-                    }
-                }
-                for(int i = 0 ; i < dungCu.length ; i++)
-                {
-                    if((dungCu[i].getMaDungCu().equalsIgnoreCase(maDungCu)) || pos1 != 0)
-                    {
-                        pos = i;
-                        break;
-                    }
-                    else{
-                        pos = -1;
-                    }
-                }
-            }while(pos != -1);
-            System.out.println("Ten dung cu hoc tap");
-            String tenSP = sc.nextLine();
-            System.out.println("So Luong Ton Kho");
-            int soluong = Integer.parseInt(sc.nextLine());
-            System.out.println("gia ban");
-            int giaBan = Integer.parseInt(sc.nextLine());
-            System.out.println("gia nhap ");
-            String giaNhap = sc.nextLine();
-            dungCu = Arrays.copyOf(dungCu, dungCu.length+1);
-            dungCu[dungCu.length-1] = new DungCuHocTap(maDungCu,tenSP,soLuong,giaBan,giaNhap);
-        System.out.println("Them san pham thanh cong");    
-    }
-    public void sua() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Nhap ma dung cu can sua thong tin:");
-        String ma = sc.nextLine();
-        int pos = -1;
-        for (int i = 0; i < dungCu.length; i++) {
-            if (dungCu[i].getMaDungCu().equalsIgnoreCase(ma)) {
-              pos = i;
-              break; 
-        }
-    }
-    while (pos == -1) {
-        System.out.println("Ma dung cu khong ton tai");
-        System.out.println("Nhap lai ma dung cu:");
-        ma = sc.nextLine();
-        for (int i = 0; i < dungCu.length; i++) {
-            if (dungCu[i].getMaDungCu().equalsIgnoreCase(ma)) {
-                pos = i;
-                break;
+        for (DungCuHocTap dc : danhSachDungCu) {
+            if (dc != null && dc.getMaDungCu().equals(maDungCu)) {
+                dc.input();
+                System.out.println("Sua dung cu thanh cong.");
+                return;
             }
         }
-    }
-    System.out.println("Ma dung cu");
-    String madc = sc.nextLine();
-    System.out.println("Ten dung cu ");
-    String tendc = sc.nextLine();
-    System.out.println("So Luong Ton Kho");
-    int soluongtonkho = Integer.parseInt(sc.nextLine());
-    System.out.println("Don Gia");
-    int dongia = Integer.parseInt(sc.nextLine());
-    System.out.println("Loai");
-    String loai = sc.nextLine();
-    dungCu[pos].setMaDungCu(madc);
-    dungCu[pos].setTenSP(tendc);
-    dungCu[pos].setSoLuongTonKho(soluongtonkho);
-    dungCu[pos].setDonGia(dongia);
-    dungCu[pos].setLoai(loai);
 
-    System.out.println("Sua thanh cong");
-}
+        System.out.println("Khong tim thay dung cu co ma " + maDungCu);
+    }
    
-    public void xoa() {
-        Scanner sc = new Scanner(System.in);
-        String ma;
-        int pos=-1;
-        int pos1 = -1;
-        System.out.println("Nhap ma dung cu can xoa: ");
-        ma = sc.nextLine();
-        do{
-            for(int i = 0 ; i  < dungCu.length;i++)
-            {
-                if(dungCu[i].getMaDungCu().equalsIgnoreCase(ma))
-                {
-                    pos = i;
-                    pos1 = -1;
-                }
-                
-            }
-            if ( pos == -1)
-            {
-                System.out.println("Ma dung cu khong ton tai");
-                System.out.println("Nhap lai ma dung cu");
-                ma = sc.nextLine();
-                pos1 = 1;
-            }
-            else{
-                DungCuHocTap[] temp = Arrays.copyOf(dungCu, dungCu.length-1);
-                for(int i = pos ; i < temp.length ; i++)
-                {
-                    temp[i] = dungCu[i+1];
-                }
-                dungCu = temp;
-                System.out.println("Xoa thanh cong");
-            }
-        }while(pos1 != -1);
-        
-    }
     
-    public void timkiem() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("======Tim Kiem Dung Cu======");
-        System.out.println("1.Tim kiem theo ma dung cu");
-        System.out.println("2.Tim kiem theo ten san pham");
-        System.out.println("============================");
-        System.out.println("Lua chon");
-        int option = Integer.parseInt(sc.nextLine());
-        switch(option)
-        {
-            case 1:
-            {
-                String madc;
-                System.out.println("Nhap ma dung cu can tim kiem: ");
-                madc = sc.nextLine();
-                System.out.printf("%-15s %-10s %-20s %15s %15s \n",
-                       "Ma DC","Ten SP","SL ","Gia ban","Gia Nhap");
-                for( int i = 0 ; i < dungCu.length ; i++)
-                {
-                    if(dungCu[i].getMaDungCu().toLowerCase().contains(madc.toLowerCase()))
-                    {
-                       System.out.printf("%-15s %-10s %-20s %15s %15s \n",
-                       dungCu[i].getMaDungCu(),dungCu[i].getTenSP(),dungCu[i].getSoLuong(),dungCu[i].getGiaBan(),dungCu[i].getGiaNhap()); 
-                    }
-                }
-                break;
-            }
-            case 2:
-            {
-                System.out.println("Nhap ten dung cu can tim kiem");
-                String tensp = sc.nextLine();
-                System.out.printf("%-15s %-10s %-20s %15s %15s \n",
-                "Ma DC","Ten SP","SL Ton Kho","Don Gia","Loai");
-                for( int i = 0 ; i < dungCu.length ; i++)
-                {
-                    if(dungCu[i].getTenSP().toLowerCase().contains(tensp.toLowerCase()))
-                    {
-        
-                      
-                       System.out.printf("%-15s %-10s %-20s %15s %15s \n",
-                       dungCu[i].getMaDungCu(),dungCu[i].getTenSP(),dungCu[i].getSoLuong(),dungCu[i].getGiaBan(),dungCu[i].getGiaNhap());
-                       break;
-                    }
-                }
-                break;
-            }
+@Override
+public void Xoa() {
+    System.out.println("Nhap ma dung cu can xoa: ");
+    String maDungCu = sc.nextLine();
+    int index = -1;
 
-            }
+    for (int i = 0; i < soLuongDungCu; i++) {
+        DungCuHocTap dc = danhSachDungCu[i];
+        if (dc != null && dc.getMaDungCu().equals(maDungCu)) {
+            index = i;
+            break;
         }
     }
+
+    if (index != -1) {
+        danhSachDungCu[index] = danhSachDungCu[soLuongDungCu - 1];
+        danhSachDungCu[soLuongDungCu - 1] = null;
+        soLuongDungCu--;
+        System.out.println("Xoa dung cu thanh cong.");
+    } else {
+        System.out.println("Khong tim thay dung cu co ma " + maDungCu);
+    }
+}
+    
+    
+@Override
+public void timKiem() {
+    System.out.println("Nhap ma hoac ten dung cu can tim: ");
+    String key = sc.nextLine().toLowerCase();
+
+    for (DungCuHocTap dc : danhSachDungCu) {
+        if (dc != null && (dc.getMaDungCu().toLowerCase().contains(key) || dc.getTenSP().toLowerCase().contains(key))) {
+            dc.output();
+            System.out.println("--------------------");
+        }
+    }
+}
+
+    @Override
+    public void readFromFile(String tenFlie) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void docFile(String tenFile) {
+        try (BufferedReader br = new BufferedReader(new FileReader(tenFile))) {
+            soLuongDungCu = Integer.parseInt(br.readLine());
+            danhSachDungCu = new DungCuHocTap[soLuongDungCu];
+
+            for (int i = 0; i < soLuongDungCu; i++) {
+                String maDungCu = br.readLine().trim();
+                String tenSP = br.readLine().trim();
+                String NSX= br.readLine().trim();
+                double giaBan= br.readLine().trim();
+                double giaNhap= br.readLine().trim();
+                int soLuong= br.readLine().trim();
+                String loaiDungCu = br.readLine().trim();
+                DungCuHocTap dc = null;
+                if (loaiDungCu.equalsIgnoreCase("Thuoc")) {
+                    Thuoc th = new Thuoc();
+                    th.setKichCo(Integer.parseInt(br.readLine().trim()));
+                    th.setLoaiThuoc(Integer.parseInt(br.readLine().trim()));
+                   
+                    dc = th;
+                }
+                else if (loaiDungCu.equalsIgnoreCase("Viet")) {
+                    Viet viet = new Viet();
+                    viet.setMauSac(Integer.parseInt(br.readLine().trim()));
+                    viet.setLoaiViet(Integer.parseInt(br.readLine().trim()));
+                    dc = viet;
+                }
+                else if (loaiDungCu.equalsIgnoreCase("Gom")) {
+                    Gom gom = new Gom();
+                    gom.setKichCo(Integer.parseInt(br.readLine().trim()));
+                    gom.setLoaiGom(Integer.parseInt(br.readLine().trim()));
+                    dc = gom;
+                }
+                if (dc != null) {
+                    dc.setMaDungCu(maDungCu);
+                    dc.setTenSP(tenSP);
+                    dc.setNSX(NSX);
+                    dc.setGiaBan(giaBan);
+                    dc.setGiaNhap(giaNhap);
+                    dc.setSoLuong(soLuong);
+                    dc.setLoai(loaiDungCu);
+
+                    danhSachDungCu[i] = dc;
+                }
+            }
+            System.out.println("Đọc file thành công.");
+        }
+         catch (IOException | ParseException | NumberFormatException e) {
+            System.out.println("Loi khi đọc file: " + e.getMessage());
+        }
+    }
+    @Override
+    public void ghiFile(String tenFile) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(tenFile))) {
+            bw.write(Integer.toString(soLuongDungCu));
+            bw.newLine();
+            for (int i = 0; i < soLuongDungCu; i++) {
+                DungCuHocTap dc = danhSachDungCu[i];
+                if (dc != null) {
+                   
+                    bw.write(dc.getMaDungCu() + "\n");
+                    bw.write(dc.getTenSP() + "\n");
+                    bw.write(dc.getNSX() + "\n");
+                    bw.write(dc.getGiaBan() + "\n");
+                    bw.write(dc.getGiaNhap() + "\n");
+                    bw.write(dc.getSoLuong() + "\n");
+                    bw.write(dc.getLoaiDungCu() + "\n");
+
+                    // Ghi dòng trống để phân biệt giữa các đối tượng
+                    bw.newLine();
+                    if (dc instanceof Thuoc) {
+                        Thuoc thc = (Thuoc) dc;
+                        bw.write(String.valueOf(thc.getKichCo()) + "\n");
+                        bw.write(String.valueOf(thc.getLoaiThuoc()) + "\n");   
+                    }
+                    if (dc instanceof Viet) {
+                        Viet vt = (Viet) dc;
+                        bw.write(String.valueOf(vt.getMauSac()) + "\n");
+                        bw.write(String.valueOf(vt.getLoaiViet()) + "\n");
+                    }
+                    
+                    if (dc instanceof Gom) {
+                        Gom gm = (Gom) dc;
+                        bw.write(String.valueOf(gm.getKichCo()) + "\n");
+                        bw.write(String.valueOf(gm.getLoaiGom()) + "\n");
+                    }
+                }
+            }
+            System.out.println("Ghi file thành công.");
+        } catch (IOException  | NumberFormatException e) {
+            System.out.println("Lỗi khi ghi file: " + e.getMessage());
+        }
+    }
+}
+
+
+
+        
         
 
 

@@ -5,24 +5,19 @@ import java.util.Scanner;
 public class DungCuHocTap extends SanPham {
     private String chucNang;
     private String maDungCu;
-    private String loai;
-    private String tenSP;
-    private int soluongtonkho;
-    private int dongia;
+    private String loaiDungCu;
     Scanner sc= new Scanner (System.in);
     public DungCuHocTap(String NSX, String tenSP, double giaBan, double giaNhap, int soLuong, String chucNang,
-            String maDungCu) {
+            String maDungCu,String loaiDungCu) {
         super(NSX, tenSP, giaBan, giaNhap, soLuong);
         this.chucNang = chucNang;
         this.maDungCu = maDungCu;
+        this.loaiDungCu=loaiDungCu;
     }
-    public DungCuHocTap(String maDungCu, String tenSP, int soluongtonkho, int dongia, String loai) {
-        this.maDungCu = maDungCu;
-        this.tenSP=tenSP;
-        this.soluongtonkho = soluongtonkho;
-        this.dongia = dongia;
-        this.loai=loai;
+    public DungCuHocTap(String sp, String tenSP, int giaBan, String maDungCu ){
+
     }
+   
     public DungCuHocTap(String maDungCu, String tenSP, int soLuong, int giaBan, String giaNhap, String loai) {
         super(tenSP, soLuong, giaBan, giaNhap);
         this.maDungCu = maDungCu;
@@ -31,16 +26,11 @@ public class DungCuHocTap extends SanPham {
     DungCuHocTap(SanPham sp, String string, int parseInt, String par1) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    public void setSoLuongTonKho(int soluongtonkho) {
-        this.soluongtonkho = soluongtonkho;
+     public String getLoaiDungCu() {
+        return loaiDungCu;
     }
-
-    public void setDonGia(int dongia) {
-        this.dongia = dongia;
-    }
-
-    public void setLoai(String loai) {
-        this.loai = loai;
+    public void setLoaiDungCu(String loaiDungCu) {
+        this.loaiDungCu = loaiDungCu;
     }
 
     public String getChucNang() {
@@ -99,7 +89,7 @@ public class DungCuHocTap extends SanPham {
         @Override
         public void output () {
                 System.out.format("| %6s | %20s | %10s | %13s | %20s | %12s | %12s |%12s |\n", this.getNSX(),
-                    this.getTenSP, this.getGiaBan(), this.getGiaNhap(),this.getSoLuong(),this.getChucNang(),this.getMaDungCu());
+                    this.getTenSP(), this.getGiaBan(), this.getGiaNhap(),this.getSoLuong(),this.getChucNang(),this.getMaDungCu());
         }
         @Override
          public String toString() {
