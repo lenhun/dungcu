@@ -6,14 +6,23 @@ public class Viet extends DungCuHocTap {
     private String mauSac;
     private String loaiViet;
     Scanner sc = new Scanner(System.in);
+    public Viet() {
+        super();
+    }
+
+    public Viet(SanPham sanPham, String maDungCu, String loaiDungCu, String mauSac, String loaiViet) {
+        super(sanPham, maDungCu, loaiDungCu);
+        this.mauSac = mauSac;
+        this.loaiViet = loaiViet;
+    }
     public Viet(String NSX, String tenSP, double giaBan, double giaNhap, int soLuong, String chucNang,
     String maDungCu, String mauSac,String loaiViet) {
         super(NSX, tenSP, giaBan, giaNhap, soLuong,chucNang,maDungCu);
         this.mauSac = mauSac;
         this.loaiViet = loaiViet;
     }
-    public Viet(DungCuHocTap dcht,String mauSac,String loaiViet){
-        super(dcht.getSanPham(),dcht.getMaDungCu(),dcht.getNSX(),dcht.getGiaBan(),dcht.getTenSP());
+    public Viet(DungCuHocTap dc,String mauSac,String loaiViet){
+        super(dc.getSanPham(),dc.getChucNang(),dc.getMaDungCu(),dc.getLoaiDungCu());
         this.mauSac=mauSac;
         this.loaiVietc=loaiViet;
     }

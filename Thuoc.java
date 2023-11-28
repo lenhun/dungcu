@@ -7,6 +7,15 @@ public class Thuoc extends DungCuHocTap{
     private String kichCo;
     private String loaiThuoc;
     Scanner sc = new Scanner(System.in);
+    public Thuoc() {
+        super();
+    }
+
+    public Thuoc(SanPham sanPham, String maDungCu, String loaiDungCu, String kichCo, String loaiThuoc) {
+        super(sanPham, maDungCu, loaiDungCu);
+        this.kichCo = kichCo;
+        this.loaiThuoc = loaiThuoc;
+    }
     public Thuoc( int NSX, String maDungCu, String chucNang, String kichCo, String loaiThuoc) {
         super(NSX,maDungCu,chucNang);
         this.kichCo = kichCo;
@@ -17,18 +26,12 @@ public class Thuoc extends DungCuHocTap{
     super(NSX, tenSP, giaBan, giaNhap, soLuong, chucNang, maDungCu);
     this.kichCo=kichCo;
     this.loaiThuoc=loaiThuoc;
- }
- public Thuoc(String maDungCu, String tenSP, String NSX, double giaBan, double giaNhap, int soLuong, String chucNang, String kichCo, String loaiThuoc) {
-    super(NSX, tenSP, giaBan, giaNhap, soLuong, chucNang, maDungCu);
-    this.kichCo = kichCo;
-    this.loaiThuoc = loaiThuoc;
-}
-public Thuoc(DungCuHocTap dcht, String kichCo, String loaiThuoc) {
-    super(dcht.getMaDungCu(), dcht.getTenSP(), dcht.getNSX(), dcht.getGiaBan(), dcht.getGiaNhap(), dcht.getSoLuong(), dcht.getChucNang());
-    this.kichCo = kichCo;
-    this.loaiThuoc = loaiThuoc;
-}
-   
+    }
+    public Thuoc(DungCuHocTap dc,String kichCo,String loaiThuoc){
+        super(dc.getSanPham(),dc.getChucNang(),dc.getMaDungCu(),dc.getLoaiDungCu());
+        this.kichCo=kichCo;
+        this.loaiThuoc=loaiThuoc;
+    }
 
     public String getLoaiThuoc(){
         return this.loaiThuoc;

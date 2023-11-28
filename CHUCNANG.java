@@ -1,8 +1,9 @@
 package SPham;
 
 public interface CHUCNANG {
-    void Them();
-    void Xoa();
-    void Sua();
-    void timKiem();
+	default void Them() {};
+	default void Xoa() {};
+	default void Sua() {};
+	default void timKiem() {};
+	default void hienThiDanhSach() {};
 }

@@ -7,6 +7,16 @@ public class Gom extends DungCuHocTap{
     private String loaiGom;
     private String kichCo;
     Scanner sc = new Scanner(System.in);
+    public Gom() {
+        super();
+    }
+
+    public Gom(SanPham sanPham, String maDungCu, String loaiDungCu, String kichCo, String loaiGom) {
+        super(sanPham, maDungCu, loaiDungCu);
+        this.kichCo = kichCo;
+        this.loaiGom = loaiGom;
+    }
+
     public Gom(String NSX, String tenSP, double giaBan, double giaNhap, int soLuong, String chucNang,
     String maDungCu, String loaiGom,String kichCo) {
         super(NSX, tenSP, giaBan, giaNhap, soLuong,chucNang,maDungCu);

@@ -14,7 +14,11 @@ public class DungCuHocTap extends SanPham {
         this.maDungCu = maDungCu;
         this.loaiDungCu=loaiDungCu;
     }
-    public DungCuHocTap(String sp, String tenSP, int giaBan, String maDungCu ){
+    public DungCuHocTap( SanPham sp ,String chucNang, String maDungCu, String loaiDungCu ){
+        super(sp.getNSX(),sp.getTenSP(),sp.getGiaBan(),sp.getGiaNhap());
+        this.chucNang=chucNang;
+        this.maDungCu=maDungCu;
+        this.loaiDungCu=loaiDungCu;
 
     }
    

@@ -1,6 +1,6 @@
 package SPham;
 
 public interface DOCGHIFILE {
-    void docFile(String tenFile);
-    void ghiFile(String tenFile);
+	void readFromFile(String tenFlie);
+    void writeToFile();
 }
